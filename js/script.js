@@ -23,7 +23,7 @@ var width = $(".chart").width() - margin.left - margin.right;
 var height = $(".chart").height() - margin.top - margin.bottom;
 
 //copied from Blocks
-formatDate = d3.time.format("%b %d, %Y");
+var formatDate = d3.time.format("%Y-%m-%d");
 
 // `x` and `y` are scale function. We'll use this to translate values from the data into pixels.
 var x = d3.time.scale()
@@ -65,12 +65,15 @@ var svg = d3.select(".chart").append("svg") // Appends the <svg> tag to the .cha
 /* ---------------------- */
 
 // This is an ajax call. Same as when we load a json file.
-d3.csv("data/columbia_unemployment.csv", function(error, data) {
+d3.csv("data/columbia_unemployment.csv", type, function(error, data) {
+        if (error) throw error;
     
     // Get observation_date values from the data.
     var datesDomain = d3.extent(data, function(d) {
         return +d.observation_date; // We use the `+` sign to parse the value as a number (rather than a string)   
     });
+
+    console.log(datesDomain);
 
     // Get unemployment rates from the data.
     var unEmRate = d3.extent(data, function(d) {
@@ -91,10 +94,10 @@ d3.csv("data/columbia_unemployment.csv", function(error, data) {
         .call(xAxis) // This calls the axis function, which builds the axis inside the <g> tag.
         .append("text") // This and everyhing below just adds a label.
         .attr("class", "label")
-        .attr("x", width)
+        .attr("x", width/2)
         .attr("y", 18)
         .style("text-anchor", "end")
-        .text("Date");
+        .text("Year");
 
     // Same as above, but for the y axis.
     svg.append("g")
@@ -109,13 +112,13 @@ d3.csv("data/columbia_unemployment.csv", function(error, data) {
         .text("Unemployment Rate")
 
     svg.append("path")
-      .data(data)
+      .datum(data)
       .attr("class", "line")
       .attr("d", line);
 });
 
 function type(d) {
-  d.observation_date = formatDate.parse("%Y-%m-%d");
+  d.observation_date = formatDate.parse(d.observation_date);
   d.CLMUR = +d.CLMUR;
   return d;
 }
