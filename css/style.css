@@ -1,0 +1,30 @@
+div {
+    outline: 1px solid green;
+}
+
+svg {
+    outline: 1px solid orange;
+}
+
+
+.chart {
+  height: 500px;
+}
+
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: black;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 3px;
+}
