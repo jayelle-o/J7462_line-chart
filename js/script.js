@@ -95,9 +95,9 @@ d3.csv("data/columbia_unemployment.csv", type, function(error, data) {
         .append("text") // This and everyhing below just adds a label.
         .attr("class", "label")
         .attr("x", width/2)
-        .attr("y", 18)
+        .attr("y", 38)
         .style("text-anchor", "end")
-        .text("Year");
+        //.text("Year");
 
     // Same as above, but for the y axis.
     svg.append("g")
